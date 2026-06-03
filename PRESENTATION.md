@@ -1,0 +1,187 @@
+# MCP - Model Context Protocol
+## Standardized way for LLMs to interact with the outside world
+
+---
+
+# Side-track: LLMs - ELI5
+
+## Large Language Models - explained like I'm 5
+
+---
+
+## I'm prompting something... what's happening?
+
+Your prompt is packed into a *context window* and sent to the model - along with:
+
+- System prompt: Hard-coded static instructions for the model
+- Assistant messages: Previous prompts and responses
+- Additional context: RAG, tool results, MCP data
+
+---
+
+## Why context windows?
+
+Every LLM has a context window size limit.
+The context window is one of the key limitations of a specific LLM.
+
+|Model|Context Window Size (Tokens)|
+|---|---|
+|Claude 4 Opus / Sonnet / Haiku|200k|
+|OpenAI GPT-4o|128k|
+|Google Gemini|1M|
+|Meta Llama|128k|
+|Mistral small / large|32K/128K|
+
+*George Orwell's 1984: 117K tokens, 88K words, 540 kb, 300 pages*
+
+---
+
+# System prompt
+
+---
+
+## System prompt
+
+The system prompt is a hard-coded static instruction for the model.
+
+Leaked system prompts of some popular models:
+
+https://github.com/asgeirtj/system_prompts_leaks
+
+---
+
+# System prompt demo
+
+---
+
+## System prompts comes with great power... and great responsibility
+
+System prompts can be manipulated to elicit unintended responses from the model, that was not part of its training data.
+
+[xAI Grok Incident](https://x.com/xai/status/1923183620606619649)
+
+---
+
+# Additional context
+
+---
+
+## Additional context
+
+Context from "external sources":
+
+- RAG (Retrieval Augmented Generation)
+- Tools (Function calling)
+- MCP (Model-Context Protocol)
+
+---
+
+## RAG
+
+Retrieves relevant context from external sources (usually vector store) to augment the model's responses.
+
+Example:
+
+- Relevant paragraphs of all documents of a company
+
+---
+
+## Tools
+
+Runs external tools (basically calling functions with params) to retrieve additional context for the model.
+
+The LLM decides whether to call tools during inference!
+Also the LLM decides how to fill parameters!
+
+Example:
+
+- How's the weather today? -> Retrieves weather data from an external API
+
+---
+
+## MCP (Model Context Protocol)
+
+Essentially a standardized protocol to expose:
+
+- tools
+- prompts
+- resources (e.g. documents)
+
+*MCP is like a OpenAPI specification for a REST API - just for LLMs.*
+
+Also: The LLM decides whether to use MCP during inference!
+
+---
+
+## Making your own MCP: Tool definition
+
+```python
+@mcp.tool(
+    title="Roll a dice",
+    description=(
+        "Returns a random number between 1 and 6."
+    ),
+    annotations=ToolAnnotations(
+        readOnlyHint=True,
+        destructiveHint=False,
+        idempotentHint=True,
+        openWorldHint=False,
+    ),
+)
+def roll_a_dice() -> int:
+    """Roll a dice and return a random number between 1 and 6."""
+    return random.randint(1, 6)
+```
+
+---
+
+## Making your own MCP: Prompt definition
+
+```python
+@mcp.prompt(
+    title="Pirate mode",
+    description="The LLM talks like a pirate.",
+)
+def pirate_mode() -> str:
+    """Talk like a pirate."""
+    return "Talk like a pirate and include a pirate-themed joke or pun in your response. Do not use any tools from this mcp."
+```
+
+---
+
+# MCP DEMO
+
+---
+
+## Why use MCPs?
+
+... the LLM could just run `curl` / `docker` / `pgsql` / `git` / etc. itself?
+
+- Less inference: MCPs don't have to "guess" how a cli, REST interface tool works
+- Security and Sandboxing: MCP can restrict access to sensitive resources, a LLM can't just run `rm -rf /` if you're careless
+
+---
+
+## Openly available MCPs
+
+- filesystem
+- github / gilab / git
+- postgres
+- google-drive
+- google-maps
+- obsidian
+- logseq
+
+---
+
+## Links
+
+- [Ollama](https://ollama.com/): Run LLMs locally (cli)
+- [OpenWebUI](https://docs.openwebui.com/): Run LLMs locally (web ui)
+- [mcp.so](https://mcp.so/)
+- [smithery](https://smithery.ai/)
+- [Awesome MCP Servers (GitHub)](https://github.com/punkpeye/awesome-mcp-servers)
+
+---
+
+# Thanks
