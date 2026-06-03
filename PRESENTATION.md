@@ -45,6 +45,8 @@ The context window is one of the key limitations of a specific LLM.
 
 # System prompt
 
+![system prompt](system_prompt.png)
+
 ---
 
 ## System prompt
