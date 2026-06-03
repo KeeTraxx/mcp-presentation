@@ -1,15 +1,20 @@
 # MCP - Model Context Protocol
 ## Standardized way for LLMs to interact with the outside world
 
+![mcp title](title.png)
+
 ---
 
 # Side-track: LLMs - ELI5
-
 ## Large Language Models - explained like I'm 5
+
+![llm](llm.png)
 
 ---
 
 ## I'm prompting something... what's happening?
+
+![prompt](prompt.png)
 
 Your prompt is packed into a *context window* and sent to the model - along with:
 
@@ -17,9 +22,11 @@ Your prompt is packed into a *context window* and sent to the model - along with
 - Assistant messages: Previous prompts and responses
 - Additional context: RAG, tool results, MCP data
 
+The format: it's all free-form text!
+
 ---
 
-## Why context windows?
+## Why do we have context windows?
 
 Every LLM has a context window size limit.
 The context window is one of the key limitations of a specific LLM.
@@ -47,6 +54,10 @@ The system prompt is a hard-coded static instruction for the model.
 Leaked system prompts of some popular models:
 
 https://github.com/asgeirtj/system_prompts_leaks
+
+Example:
+
+https://github.com/asgeirtj/system_prompts_leaks/blob/main/OpenAI/GPT-4.5.md
 
 ---
 
