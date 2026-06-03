@@ -18,11 +18,11 @@
 
 Your prompt is packed into a *context window* and sent to the model - along with:
 
-- System prompt: Hard-coded static instructions for the model
-- Assistant messages: Previous prompts and responses
-- Additional context: RAG, tool results, MCP data
+- **System prompt**: Hard-coded static instructions for the model
+- **Assistant messages**: Previous prompts and responses
+- **Additional context**: RAG, tool results, MCP data
 
-The format: it's all free-form text!
+**The format**: it's all free-form text!
 
 ---
 
@@ -51,13 +51,13 @@ The context window is one of the key limitations of a specific LLM.
 
 ## System prompt
 
-The system prompt is a hard-coded static instruction for the model.
+The **system prompt** is a *hard-coded static instruction for the model*.
 
 Leaked system prompts of some popular models:
 
 https://github.com/asgeirtj/system_prompts_leaks
 
-Example:
+### Example
 
 https://github.com/asgeirtj/system_prompts_leaks/blob/main/OpenAI/GPT-4.5.md
 
@@ -65,11 +65,13 @@ https://github.com/asgeirtj/system_prompts_leaks/blob/main/OpenAI/GPT-4.5.md
 
 # System prompt demo
 
+![Pirate](pirate.png)
+
 ---
 
 ## System prompts comes with great power... and great responsibility
 
-System prompts can be manipulated to elicit unintended responses from the model, that was not part of its training data.
+System prompts can be **manipulated** to elicit unintended responses from the model, that was not part of its training data.
 
 [xAI Grok Incident](https://x.com/xai/status/1923183620606619649)
 
@@ -77,37 +79,30 @@ System prompts can be manipulated to elicit unintended responses from the model,
 
 # Additional context
 
+![tools](tools.png)
+
 ---
 
 ## Additional context
 
-Context from "external sources":
+Context that allow LLM to communicate with "the external world":
 
-- RAG (Retrieval Augmented Generation)
-- Tools (Function calling)
-- MCP (Model-Context Protocol)
-
----
-
-## RAG
-
-Retrieves relevant context from external sources (usually vector store) to augment the model's responses.
-
-Example:
-
-- Relevant paragraphs of all documents of a company
+- **RAG** (Retrieval Augmented Generation)
+- **Tools** (Function calling)
+- **MCP** (Model Context Protocol servers)
 
 ---
 
 ## Tools
 
-Runs external tools (basically calling functions with params) to retrieve additional context for the model.
+Runs **external tools** (basically calling functions with params) to retrieve additional context for the model.
 
-The LLM decides whether to call tools during inference!
-Also the LLM decides how to fill parameters!
+- The LLM decides whether to call tools during inference.
+- The LLM decides how to fill parameters.
 
-Example:
+### Examples
 
+- Web search: the LLM might start a google search to fetch data.
 - How's the weather today? -> Retrieves weather data from an external API
 
 ---
@@ -123,6 +118,15 @@ Essentially a standardized protocol to expose:
 *MCP is like a OpenAPI specification for a REST API - just for LLMs.*
 
 Also: The LLM decides whether to use MCP during inference!
+
+---
+
+## Making your own MCP
+
+- **Python**: `mcp`
+- **Node.js / TypeScript**: `@modelcontextprotocol/sdk`
+- **Go**: `mcp-go`
+- **Rust**: `rmcp`
 
 ---
 
@@ -171,19 +175,19 @@ def pirate_mode() -> str:
 ... the LLM could just run `curl` / `docker` / `pgsql` / `git` / etc. itself?
 
 - Less inference: MCPs don't have to "guess" how a cli, REST interface tool works
-- Security and Sandboxing: MCP can restrict access to sensitive resources, a LLM can't just run `rm -rf /` if you're careless
+- Security and Sandboxing: MCP can restrict access to dangerous / sensitive operations, a LLM can just run `rm -rf /` if you're careless
+- It's standardized: the same MCP server can be used in any MCP supporting LLM (Claude, Copilot, Continue).
+- Popular Python libraries support MCP: LangChain, LangGraph
 
 ---
 
-## Openly available MCPs
+## Primary Use Cases
 
-- filesystem
-- github / gilab / git
-- postgres
-- google-drive
-- google-maps
-- obsidian
-- logseq
+- Query complex sources: databases, Observability data (Grafana)
+- Documentation lookup
+- Read internal knowledge base (Atlassian Stack, Mails, Cloud storage)
+- Personal knowledge (Calendar, Mails, Contacts)
+- Memory / Context persistence (store & retrieve facts from other sessions)
 
 ---
 
@@ -198,3 +202,5 @@ def pirate_mode() -> str:
 ---
 
 # Thanks
+
+
