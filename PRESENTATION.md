@@ -127,6 +127,12 @@ Essentially a standardized protocol to expose:
 
 Also: The LLM decides whether to use MCP during inference!
 
+MCPs are exposed through:
+
+- Stdin
+- HTTP SSE
+- Streamable HTTP
+
 ---
 
 ## Making your own MCP
@@ -180,12 +186,12 @@ def pirate_mode() -> str:
 
 ## Why use MCPs?
 
-... the LLM could just run `curl` / `docker` / `pgsql` / `git` / etc. itself?
+... the LLM could just run `curl` / `docker` / `pgsql` / `git` / `kubectl` etc. itself?
 
 - Less inference: MCPs don't have to "guess" how a cli, REST interface tool works
 - Security and Sandboxing: MCP can restrict access to dangerous / sensitive operations, a LLM can just run `rm -rf /` if you're careless
-- It's standardized: the same MCP server can be used in any MCP supporting LLM (Claude, Copilot, Continue).
-- Popular Python libraries support MCP: LangChain, LangGraph
+- **Standardized**: the same MCP server can be used in any MCP supporting LLM (Claude, Copilot, Continue).
+- No need for **local installation** of binaries
 
 ---
 
@@ -193,7 +199,7 @@ def pirate_mode() -> str:
 
 - Query complex sources: databases, Observability data (Grafana)
 - Documentation lookup
-- Read internal knowledge base (Atlassian Stack, Mails, Cloud storage)
+- Read internal knowledge base (Atlassian Stack, Cloud storage)
 - Personal knowledge (Calendar, Mails, Contacts)
 - Memory / Context persistence (store & retrieve facts from other sessions)
 
@@ -212,3 +218,4 @@ def pirate_mode() -> str:
 # Thanks
 
 
+![yoda thanks](yoda_thanks.png)
