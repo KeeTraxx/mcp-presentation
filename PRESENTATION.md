@@ -5,6 +5,14 @@
 
 ---
 
+## This presentation
+
+https://keetraxx.github.io/mcp-presentation/
+
+![qrcode](presentation_link.png)
+
+---
+
 # Side-track: LLMs - ELI5
 ## Large Language Models - explained like I'm 5
 
